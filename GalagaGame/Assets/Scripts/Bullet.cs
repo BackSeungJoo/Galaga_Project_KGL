@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
 
     }
 
-    // 플레이어를 죽이는 코드
+    // 적을 죽이는 코드
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -36,6 +36,12 @@ public class Bullet : MonoBehaviour
             {
                 enemyControl.EnemyDie();
             }
+        }
+
+        // 벽에 부딪히면 파괴
+        if(other.tag == "Wall")
+        {
+            Destroy(gameObject);
         }
     }
 }

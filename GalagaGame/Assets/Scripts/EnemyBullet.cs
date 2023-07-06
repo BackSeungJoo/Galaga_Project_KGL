@@ -33,6 +33,12 @@ public class EnemyBullet : MonoBehaviour
                 playerControl.Die();
             }
         }
+
+        // º®¿¡ ºÎµúÈ÷¸é ÆÄ±«
+        if (other.tag == "Wall")
+        {
+            Destroy(gameObject);
+        }
     }
     
 }
