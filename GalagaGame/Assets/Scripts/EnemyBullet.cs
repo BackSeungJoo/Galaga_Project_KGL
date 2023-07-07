@@ -1,44 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public float Speed = default;
-    private Rigidbody rigid = default;
-    private Transform target = default;
+    private GameManage gameManage;
+    public float Speed;
+    private Rigidbody rigid;
+    private Transform target;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rigid = GetComponent<Rigidbody>();
         target = FindObjectOfType<PlayerControl>().transform;
 
         transform.LookAt(target);
         rigid.velocity = transform.forward * Speed; // z 방향
+
+        gameManage = FindObjectOfType<GameManage>();
+
         Destroy(gameObject, 3.0f);
     }
 
-    // Update is called once per frame
-    // 플레이어를 죽이는 코드
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            PlayerControl playerControl = other.GetComponent<PlayerControl>();
+            gameManage.life -= 1;
 
-            if (playerControl != null)
+            if (gameManage.life < 1)
             {
-                playerControl.Die();
+                PlayerControl playerControl = other.GetComponent<PlayerControl>();
+
+                if (playerControl != null)
+                {
+                    playerControl.Die();
+                }
             }
         }
 
         // 벽에 부딪히면 파괴
-        if (other.tag == "Wall")
+        if (other.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }
     }
-    
 }

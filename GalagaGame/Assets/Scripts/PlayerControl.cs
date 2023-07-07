@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    // 게임 매니저
+    public GameManage gameManage = default;
+
     // 플레이어 이동을 위한 변수
     private Rigidbody playerRigid = default;
     public float speed = 8f;
 
     void Start()
-    {
+    { 
         // 플레이어 캐릭터 본인의 컴포넌트를 가져옴.
         playerRigid = GetComponent<Rigidbody>();
     }
@@ -30,6 +33,9 @@ public class PlayerControl : MonoBehaviour
 
     public void Die()
     {
+        // 게임 엔드 씬 실행
+        gameManage.EndGame();
+
         gameObject.SetActive(false);
     }
 }
